@@ -43,6 +43,10 @@
 #ifndef __OPENCV_PRECOMP_H__
 #define __OPENCV_PRECOMP_H__
 
+#if defined(__BORLANDC__)
+#include <math.h>
+#endif
+
 #include "opencv2/objdetect.hpp"
 #include "opencv2/imgproc.hpp"
 

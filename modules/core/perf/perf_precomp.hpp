@@ -4,6 +4,10 @@
 #ifndef __OPENCV_PERF_PRECOMP_HPP__
 #define __OPENCV_PERF_PRECOMP_HPP__
 
+#if defined(__BORLANDC__)
+#include <math.h>
+#endif
+
 #include "opencv2/ts.hpp"
 
 #endif

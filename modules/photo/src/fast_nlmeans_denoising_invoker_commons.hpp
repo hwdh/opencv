@@ -50,6 +50,11 @@ using namespace cv;
 namespace std {
 template <typename T> bool isnan(T value) { return _isnan(value) != 0; }
 }
+#elif defined(__BORLANDC__)
+#include <math.h>
+namespace std {
+template <typename T> bool isnan(T value) { return isnan(value) != 0; }
+}
 #endif
 
 template <typename T> struct pixelInfo_

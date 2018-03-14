@@ -2166,7 +2166,7 @@ using ::std::tuple_size;
 // Typed tests need <typeinfo> and variadic macros, which GCC, VC++ 8.0,
 // Sun Pro CC, IBM Visual Age, and HP aCC support.
 #if defined(__GNUC__) || (_MSC_VER >= 1400) || defined(__SUNPRO_CC) || \
-    defined(__IBMCPP__) || defined(__HP_aCC)
+    defined(__IBMCPP__) || defined(__HP_aCC) || defined(__BORLANDC__)
 # define GTEST_HAS_TYPED_TEST 1
 # define GTEST_HAS_TYPED_TEST_P 1
 #endif

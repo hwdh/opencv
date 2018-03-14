@@ -32,6 +32,10 @@
 #define OPENCV_FLANN_DIST_H_
 
 #include <cmath>
+#if defined(__BORLANDC__)
+#include <math.h>
+#endif
+
 #include <cstdlib>
 #include <string.h>
 #ifdef _MSC_VER
@@ -61,7 +65,7 @@ template<>
 inline int abs<int>(int x) { return ::abs(x); }
 
 template<>
-inline float abs<float>(float x) { return fabsf(x); }
+inline float abs<float>(float x) { return fabs(x); }
 
 template<>
 inline double abs<double>(double x) { return fabs(x); }

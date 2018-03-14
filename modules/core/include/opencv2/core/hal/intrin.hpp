@@ -451,7 +451,7 @@ inline unsigned int trailingZeros32(unsigned int value) {
     return __builtin_ctz(value);
 #elif defined(__ICC) || defined(__INTEL_COMPILER)
     return _bit_scan_forward(value);
-#elif defined(__clang__)
+#elif defined(__clang__) && !defined(__BORLANDC__)
     return llvm.cttz.i32(value, true);
 #else
     static const int MultiplyDeBruijnBitPosition[32] = {

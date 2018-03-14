@@ -5029,7 +5029,7 @@ std::string FormatTimeInMillisAsSeconds(TimeInMillis ms) {
 static bool PortableLocaltime(time_t seconds, struct tm* out) {
 #if defined(_MSC_VER)
   return localtime_s(out, &seconds) == 0;
-#elif defined(__MINGW32__) || defined(__MINGW64__)
+#elif defined(__MINGW32__) || defined(__MINGW64__)  || defined(__BORLANDC__)
   // MINGW <time.h> provides neither localtime_r nor localtime_s, but uses
   // Windows' localtime(), which has a thread-local tm buffer.
   struct tm* tm_ptr = localtime(&seconds);  // NOLINT

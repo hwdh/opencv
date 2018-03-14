@@ -45,6 +45,9 @@
 
 #include <vector>
 #include <cmath>
+#if defined(__BORLANDC__)
+#include <math.h>
+#endif
 #include <iostream>
 
 #include "opencv2/video/tracking.hpp"

@@ -2673,7 +2673,13 @@ void vlineSmooth1N<uint8_t, ufixedpoint16>(const ufixedpoint16* const * src, con
         v_pack_store(dst + i, v_rshr_pack<16>(v_res0, v_res1));
     }
     for (; i < len; i++)
+    {
+#if defined(__BORLANDC__)    
+        dst[i] = cv::saturate_cast<uint8_t>(static_cast<float>(m[0] * src0[i]));
+#else        
         dst[i] = m[0] * src0[i];
+#endif        
+    }
 }
 template <typename ET, typename FT>
 void vlineSmooth1N1(const FT* const * src, const FT*, int, ET* dst, int len)
@@ -2690,7 +2696,13 @@ void vlineSmooth1N1<uint8_t, ufixedpoint16>(const ufixedpoint16* const * src, co
     for (; i < len - 7; i += 8)
         v_rshr_pack_store<8>(dst + i, v_load((uint16_t*)(src0 + i)));
     for (; i < len; i++)
+    {
+#if defined(__BORLANDC__)    
+        dst[i] = cv::saturate_cast<uint8_t>(static_cast<float>(src0[i]));
+#else        
         dst[i] = src0[i];
+#endif        
+    }
 }
 template <typename ET, typename FT>
 void vlineSmooth3N(const FT* const * src, const FT* m, int, ET* dst, int len)
@@ -2737,7 +2749,13 @@ void vlineSmooth3N<uint8_t, ufixedpoint16>(const ufixedpoint16* const * src, con
         v_pack_store(dst + i, v_res);
     }
     for (; i < len; i++)
+    {
+#if defined(__BORLANDC__)    
+        dst[i] = cv::saturate_cast<uint8_t>(static_cast<float>( m[0] * src[0][i] + m[1] * src[1][i] + m[2] * src[2][i] ));
+#else        
         dst[i] = m[0] * src[0][i] + m[1] * src[1][i] + m[2] * src[2][i];
+#endif
+    }
 }
 template <typename ET, typename FT>
 void vlineSmooth3N121(const FT* const * src, const FT*, int, ET* dst, int len)
@@ -2813,7 +2831,13 @@ void vlineSmooth5N<uint8_t, ufixedpoint16>(const ufixedpoint16* const * src, con
         v_pack_store(dst + i, v_res);
     }
     for (; i < len; i++)
+    {
+#if defined(__BORLANDC__)    
+        dst[i] = cv::saturate_cast<uint8_t>(static_cast<float>(m[0] * src[0][i] + m[1] * src[1][i] + m[2] * src[2][i] + m[3] * src[3][i] + m[4] * src[4][i]));
+#else
         dst[i] = m[0] * src[0][i] + m[1] * src[1][i] + m[2] * src[2][i] + m[3] * src[3][i] + m[4] * src[4][i];
+#endif
+    }
 }
 template <typename ET, typename FT>
 void vlineSmooth5N14641(const FT* const * src, const FT*, int, ET* dst, int len)
@@ -2916,7 +2940,11 @@ void vlineSmooth<uint8_t, ufixedpoint16>(const ufixedpoint16* const * src, const
         {
             val = val + m[j] * src[j][i];
         }
+#if defined(__BORLANDC__)        
+        dst[i] = cv::saturate_cast<uint8_t>(static_cast<float>(val));
+#else
         dst[i] = val;
+#endif        
     }
 }
 template <typename ET, typename FT>

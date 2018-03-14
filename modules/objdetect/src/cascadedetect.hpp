@@ -1,5 +1,9 @@
 #pragma once
 
+#if defined(__BORLANDC__)
+#include <math.h>
+#endif
+
 #include "opencv2/core/ocl.hpp"
 
 namespace cv

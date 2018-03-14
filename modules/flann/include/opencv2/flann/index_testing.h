@@ -34,6 +34,9 @@
 #include <cstring>
 #include <cassert>
 #include <cmath>
+#if defined(__BORLANDC__)
+#include <math.h>
+#endif
 
 #include "matrix.h"
 #include "nn_index.h"
