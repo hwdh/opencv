@@ -238,7 +238,7 @@ void MultiBandBlender::prepare(Rect dst_roi)
 
     // Crop unnecessary bands
     double max_len = static_cast<double>(std::max(dst_roi.width, dst_roi.height));
-    num_bands_ = std::min(actual_num_bands_, static_cast<int>(ceil(std::log(max_len) / std::log(2.0))));
+    num_bands_ = std::min(actual_num_bands_, static_cast<int>(std::ceil(std::log(max_len) / std::log(2.0))));
 
     // Add border to the final image, to ensure sizes are divided by (1 << num_bands_)
     dst_roi.width += ((1 << num_bands_) - dst_roi.width % (1 << num_bands_)) % (1 << num_bands_);
