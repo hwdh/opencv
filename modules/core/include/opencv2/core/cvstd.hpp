@@ -943,7 +943,7 @@ String String::toLowerCase() const
         return String();
     String res(cstr_, len_);
     for (size_t i = 0; i < len_; ++i)
-        res.cstr_[i] = (char) ::tolower(cstr_[i]);
+        res.cstr_[i] = (char) std::tolower(cstr_[i]);
 
     return res;
 }

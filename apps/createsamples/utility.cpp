@@ -459,7 +459,7 @@ void icvRandomQuad( int width, int height, double quad[4][2],
     Mat vect( 3, 1, CV_64FC1, &vectData[0] );
 
     rotVectData[0] = theRNG().uniform( -maxxangle, maxxangle );
-    rotVectData[1] = ( maxyangle - fabs( rotVectData[0] ) ) * theRNG().uniform( -1.0, 1.0 );
+    rotVectData[1] = ( maxyangle - std::fabs( rotVectData[0] ) ) * theRNG().uniform( -1.0, 1.0 );
     rotVectData[2] = theRNG().uniform( -maxzangle, maxzangle );
     d = ( distfactor + distfactor2 * theRNG().uniform( -1.0, 1.0 ) ) * width;
 

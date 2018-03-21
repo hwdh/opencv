@@ -132,21 +132,21 @@ void CV_POSITTest::run( int start_from )
         angleZ = (float)(cvtest::randReal(rng)*2*CV_PI);
 
         true_rotationX->data.fl[0 *3+ 0] = 1;
-        true_rotationX->data.fl[1 *3+ 1] = (float)cos(angleX);
+        true_rotationX->data.fl[1 *3+ 1] = (float)std::cos(angleX);
         true_rotationX->data.fl[2 *3+ 2] = true_rotationX->data.fl[1 *3+ 1];
-        true_rotationX->data.fl[1 *3+ 2] = -(float)sin(angleX);
+        true_rotationX->data.fl[1 *3+ 2] = -(float)std::sin(angleX);
         true_rotationX->data.fl[2 *3+ 1] = -true_rotationX->data.fl[1 *3+ 2];
 
         true_rotationY->data.fl[1 *3+ 1] = 1;
-        true_rotationY->data.fl[0 *3+ 0] = (float)cos(angleY);
+        true_rotationY->data.fl[0 *3+ 0] = (float)std::cos(angleY);
         true_rotationY->data.fl[2 *3+ 2] = true_rotationY->data.fl[0 *3+ 0];
-        true_rotationY->data.fl[0 *3+ 2] = -(float)sin(angleY);
+        true_rotationY->data.fl[0 *3+ 2] = -(float)std::sin(angleY);
         true_rotationY->data.fl[2 *3+ 0] = -true_rotationY->data.fl[0 *3+ 2];
 
         true_rotationZ->data.fl[2 *3+ 2] = 1;
-        true_rotationZ->data.fl[0 *3+ 0] = (float)cos(angleZ);
+        true_rotationZ->data.fl[0 *3+ 0] = (float)std::cos(angleZ);
         true_rotationZ->data.fl[1 *3+ 1] = true_rotationZ->data.fl[0 *3+ 0];
-        true_rotationZ->data.fl[0 *3+ 1] = -(float)sin(angleZ);
+        true_rotationZ->data.fl[0 *3+ 1] = -(float)std::sin(angleZ);
         true_rotationZ->data.fl[1 *3+ 0] = -true_rotationZ->data.fl[0 *3+ 1];
 
         cvMatMul( true_rotationX, true_rotationY, tmp_matrix);

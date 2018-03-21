@@ -68,7 +68,7 @@ void calib::calibController::updateState()
             cConfState = true;
 
         for(int i = 0; i < 5; i++)
-            if(mCalibData->stdDeviations.at<double>(4+i) / fabs(mCalibData->distCoeffs.at<double>(i)) > 1)
+            if(mCalibData->stdDeviations.at<double>(4+i) / std::fabs(mCalibData->distCoeffs.at<double>(i)) > 1)
                 dConfState = false;
 
         mConfIntervalsState = fConfState && cConfState && dConfState;
@@ -80,7 +80,7 @@ void calib::calibController::updateState()
     if (getFramesNumberState() && mNeedTuning) {
         if( !(mCalibFlags & cv::CALIB_FIX_ASPECT_RATIO) &&
             mCalibData->cameraMatrix.total()) {
-            double fDiff = fabs(mCalibData->cameraMatrix.at<double>(0,0) -
+            double fDiff = std::fabs(mCalibData->cameraMatrix.at<double>(0,0) -
                                 mCalibData->cameraMatrix.at<double>(1,1));
 
             if (fDiff < 3*mCalibData->stdDeviations.at<double>(0) &&
@@ -93,26 +93,26 @@ void calib::calibController::updateState()
 
         if(!(mCalibFlags & cv::CALIB_ZERO_TANGENT_DIST)) {
             const double eps = 0.005;
-            if(fabs(mCalibData->distCoeffs.at<double>(2)) < eps &&
-                    fabs(mCalibData->distCoeffs.at<double>(3)) < eps)
+            if(std::fabs(mCalibData->distCoeffs.at<double>(2)) < eps &&
+                    std::fabs(mCalibData->distCoeffs.at<double>(3)) < eps)
                 mCalibFlags |= cv::CALIB_ZERO_TANGENT_DIST;
         }
 
         if(!(mCalibFlags & cv::CALIB_FIX_K1)) {
             const double eps = 0.005;
-            if(fabs(mCalibData->distCoeffs.at<double>(0)) < eps)
+            if(std::fabs(mCalibData->distCoeffs.at<double>(0)) < eps)
                 mCalibFlags |= cv::CALIB_FIX_K1;
         }
 
         if(!(mCalibFlags & cv::CALIB_FIX_K2)) {
             const double eps = 0.005;
-            if(fabs(mCalibData->distCoeffs.at<double>(1)) < eps)
+            if(std::fabs(mCalibData->distCoeffs.at<double>(1)) < eps)
                 mCalibFlags |= cv::CALIB_FIX_K2;
         }
 
         if(!(mCalibFlags & cv::CALIB_FIX_K3)) {
             const double eps = 0.005;
-            if(fabs(mCalibData->distCoeffs.at<double>(4)) < eps)
+            if(std::fabs(mCalibData->distCoeffs.at<double>(4)) < eps)
                 mCalibFlags |= cv::CALIB_FIX_K3;
         }
 

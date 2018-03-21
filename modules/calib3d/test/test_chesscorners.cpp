@@ -106,8 +106,8 @@ double calcError(const vector<Point2f>& v, const Mat& u)
         for( int j = 0; j < count_exp; ++j )
         {
             int j1 = k == 0 ? j : count_exp - j - 1;
-            double dx = fabs( v[j].x - u_data[j1].x );
-            double dy = fabs( v[j].y - u_data[j1].y );
+            double dx = std::fabs( v[j].x - u_data[j1].x );
+            double dy = std::fabs( v[j].y - u_data[j1].y );
 
 #if defined(_L2_ERR)
             err1 += dx*dx + dy*dy;

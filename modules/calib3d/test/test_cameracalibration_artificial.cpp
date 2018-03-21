@@ -92,7 +92,7 @@ protected:
 
     bool checkErr(double a, double a0, double eps, double delta)
     {
-        return fabs(a - a0) > eps * (fabs(a0) + delta);
+        return std::fabs(a - a0) > eps * (std::fabs(a0) + delta);
     }
 
     void compareCameraMatrs(const Mat_<double>& camMat, const Mat& camMat_est)
@@ -150,7 +150,7 @@ protected:
         }
         ts->printf( cvtest::TS::LOG, "%d) DistCoeff exp=(%.2f, %.2f, %.4f, %.4f %.2f)\n", r, k1, k2, p1, p2, k3);
         ts->printf( cvtest::TS::LOG, "%d) DistCoeff est=(%.2f, %.2f, %.4f, %.4f %.2f)\n", r, k1_e, k2_e, p1_e, p2_e, k3_e);
-        ts->printf( cvtest::TS::LOG, "%d) AbsError = [%.5f %.5f %.5f %.5f %.5f]\n", r, fabs(k1-k1_e), fabs(k2-k2_e), fabs(p1-p1_e), fabs(p2-p2_e), fabs(k3-k3_e));
+        ts->printf( cvtest::TS::LOG, "%d) AbsError = [%.5f %.5f %.5f %.5f %.5f]\n", r, std::fabs(k1-k1_e), std::fabs(k2-k2_e), std::fabs(p1-p1_e), std::fabs(p2-p2_e), std::fabs(k3-k3_e));
     }
 
     void compareShiftVecs(const vector<Mat>& tvecs, const vector<Mat>& tvecs_est)

@@ -22,21 +22,21 @@ void calib::Euler(const cv::Mat& src, cv::Mat& dst, int argType)
 
         if(src.at<double>(0,2) < -0.998)
         {
-            pitch = -atan2(src.at<double>(1,0), src.at<double>(1,1));
+            pitch = -std::atan2(src.at<double>(1,0), src.at<double>(1,1));
             yaw = -CALIB_PI_2;
             roll = 0.;
         }
         else if(src.at<double>(0,2) > 0.998)
         {
-            pitch = atan2(src.at<double>(1,0), src.at<double>(1,1));
+            pitch = std::atan2(src.at<double>(1,0), src.at<double>(1,1));
             yaw = CALIB_PI_2;
             roll = 0.;
         }
         else
         {
-            pitch = atan2(-src.at<double>(1,2), src.at<double>(2,2));
-            yaw = asin(src.at<double>(0,2));
-            roll = atan2(-src.at<double>(0,1), src.at<double>(0,0));
+            pitch = std::atan2(-src.at<double>(1,2), src.at<double>(2,2));
+            yaw = std::asin(src.at<double>(0,2));
+            roll = std::atan2(-src.at<double>(0,1), src.at<double>(0,0));
         }
 
         if(argType == CALIB_DEGREES)
@@ -85,21 +85,21 @@ void calib::Euler(const cv::Mat& src, cv::Mat& dst, int argType)
         i.copyTo(M);
 
         double* pR = dst.ptr<double>();
-        pR[4] = cos(pitch);
-        pR[7] = sin(pitch);
+        pR[4] = std::cos(pitch);
+        pR[7] = std::sin(pitch);
         pR[8] = pR[4];
         pR[5] = -pR[7];
 
         double* pM = M.ptr<double>();
-        pM[0] = cos(yaw);
-        pM[2] = sin(yaw);
+        pM[0] = std::cos(yaw);
+        pM[2] = std::sin(yaw);
         pM[8] = pM[0];
         pM[6] = -pM[2];
 
         dst *= M;
         i.copyTo(M);
-        pM[0] = cos(roll);
-        pM[3] = sin(roll);
+        pM[0] = std::cos(roll);
+        pM[3] = std::sin(roll);
         pM[4] = pM[0];
         pM[1] = -pM[3];
 

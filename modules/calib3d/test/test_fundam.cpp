@@ -69,7 +69,7 @@ static int cvTsRodrigues( const CvMat* src, CvMat* dst, CvMat* jacobian )
 
         cvConvert( src, &_r );
 
-        theta = sqrt(r[0]*r[0] + r[1]*r[1] + r[2]*r[2]);
+        theta = std::sqrt(r[0]*r[0] + r[1]*r[1] + r[2]*r[2]);
         if( theta < DBL_EPSILON )
         {
             cvSetIdentity( dst );
@@ -86,8 +86,8 @@ static int cvTsRodrigues( const CvMat* src, CvMat* dst, CvMat* jacobian )
             // omega = r/theta (~[w1, w2, w3])
             double itheta = 1./theta;
             double w1 = r[0]*itheta, w2 = r[1]*itheta, w3 = r[2]*itheta;
-            double alpha = cos(theta);
-            double beta = sin(theta);
+            double alpha = std::cos(theta);
+            double beta = std::sin(theta);
             double gamma = 1 - alpha;
             double omegav[] =
             {
@@ -224,18 +224,18 @@ static int cvTsRodrigues( const CvMat* src, CvMat* dst, CvMat* jacobian )
         cvSetIdentity( &matI );
 
         if( cvNorm( &matA, &matI, CV_C ) > 1e-3 ||
-            fabs( cvDet(&matR) - 1 ) > 1e-3 )
+            std::fabs( cvDet(&matR) - 1 ) > 1e-3 )
             return 0;
 
         tr = (cvTrace(&matR).val[0] - 1.)*0.5;
         tr = tr > 1. ? 1. : tr < -1. ? -1. : tr;
-        theta = acos(tr);
-        alpha = cos(theta);
-        beta = sin(theta);
+        theta = std::acos(tr);
+        alpha = std::cos(theta);
+        beta = std::sin(theta);
 
         if( beta >= 1e-5 )
         {
-            double dtheta_dtr = -1./sqrt(1 - tr*tr);
+            double dtheta_dtr = -1./std::sqrt(1 - tr*tr);
             double vth = 1/(2*beta);
 
             // om1 = [R(3,2) - R(2,3), R(1,3) - R(3,1), R(2,1) - R(1,2)]'
@@ -300,9 +300,9 @@ static int cvTsRodrigues( const CvMat* src, CvMat* dst, CvMat* jacobian )
         }
         else
         {
-            r[0] = theta*sqrt((R[0] + 1)*0.5);
-            r[1] = theta*sqrt((R[4] + 1)*0.5)*(R[1] >= 0 ? 1 : -1);
-            r[2] = theta*sqrt((R[8] + 1)*0.5)*(R[2] >= 0 ? 1 : -1);
+            r[0] = theta*std::sqrt((R[0] + 1)*0.5);
+            r[1] = theta*std::sqrt((R[4] + 1)*0.5)*(R[1] >= 0 ? 1 : -1);
+            r[2] = theta*std::sqrt((R[8] + 1)*0.5)*(R[2] >= 0 ? 1 : -1);
             cvConvert( &_r, dst );
 
             if( jacobian )
@@ -636,8 +636,8 @@ void CV_RodriguesTest::fill_array( int test_case_idx, int i, int j, Mat& arr )
         r[1] = cvtest::randReal(rng)*CV_PI*2;
         r[2] = cvtest::randReal(rng)*CV_PI*2;
 
-        theta0 = sqrt(r[0]*r[0] + r[1]*r[1] + r[2]*r[2]);
-        theta1 = fmod(theta0, CV_PI*2);
+        theta0 = std::sqrt(r[0]*r[0] + r[1]*r[1] + r[2]*r[2]);
+        theta1 = std::fmod(theta0, CV_PI*2);
 
         if( theta1 > CV_PI )
             theta1 = -(CV_PI*2 - theta1);
@@ -733,7 +733,7 @@ void CV_RodriguesTest::prepare_to_validation( int /*test_case_idx*/ )
     cvtest::copy( vec, vec2 );
 
     theta0 = cvtest::norm( vec2, CV_L2 );
-    theta1 = fmod( theta0, CV_PI*2 );
+    theta1 = std::fmod( theta0, CV_PI*2 );
 
     if( theta1 > CV_PI )
         theta1 = -(CV_PI*2 - theta1);
@@ -1036,12 +1036,12 @@ void CV_FundamentalMatTest::prepare_to_validation( int test_case_idx )
         double y1 = p1.at<Point2d>(i).y;
         double x2 = p2.at<Point2d>(i).x;
         double y2 = p2.at<Point2d>(i).y;
-        double n1 = 1./sqrt(x1*x1 + y1*y1 + 1);
-        double n2 = 1./sqrt(x2*x2 + y2*y2 + 1);
-        double t0 = fabs(f0[0]*x2*x1 + f0[1]*x2*y1 + f0[2]*x2 +
+        double n1 = 1./std::sqrt(x1*x1 + y1*y1 + 1);
+        double n2 = 1./std::sqrt(x2*x2 + y2*y2 + 1);
+        double t0 = std::fabs(f0[0]*x2*x1 + f0[1]*x2*y1 + f0[2]*x2 +
                    f0[3]*y2*x1 + f0[4]*y2*y1 + f0[5]*y2 +
                    f0[6]*x1 + f0[7]*y1 + f0[8])*n1*n2;
-        double t = fabs(f[0]*x2*x1 + f[1]*x2*y1 + f[2]*x2 +
+        double t = std::fabs(f[0]*x2*x1 + f[1]*x2*y1 + f[2]*x2 +
                    f[3]*y2*x1 + f[4]*y2*y1 + f[5]*y2 +
                    f[6]*x1 + f[7]*y1 + f[8])*n1*n2;
         mtfm1[i] = 1;
@@ -1377,20 +1377,20 @@ void CV_EssentialMatTest::prepare_to_validation( int test_case_idx )
         double y2 = p2.at<Point2d>(i).y;
 //        double t0 = sampson_error(f0, x1, y1, x2, y2);
 //        double t = sampson_error(f, x1, y1, x2, y2);
-        double n1 = 1./sqrt(x1*x1 + y1*y1 + 1);
-        double n2 = 1./sqrt(x2*x2 + y2*y2 + 1);
-        double t0 = fabs(f0[0]*x2*x1 + f0[1]*x2*y1 + f0[2]*x2 +
+        double n1 = 1./std::sqrt(x1*x1 + y1*y1 + 1);
+        double n2 = 1./std::sqrt(x2*x2 + y2*y2 + 1);
+        double t0 = std::fabs(f0[0]*x2*x1 + f0[1]*x2*y1 + f0[2]*x2 +
                    f0[3]*y2*x1 + f0[4]*y2*y1 + f0[5]*y2 +
                    f0[6]*x1 + f0[7]*y1 + f0[8])*n1*n2;
-        double t = fabs(f[0]*x2*x1 + f[1]*x2*y1 + f[2]*x2 +
+        double t = std::fabs(f[0]*x2*x1 + f[1]*x2*y1 + f[2]*x2 +
                    f[3]*y2*x1 + f[4]*y2*y1 + f[5]*y2 +
                    f[6]*x1 + f[7]*y1 + f[8])*n1*n2;
         mtfm1[i] = 1;
         mtfm2[i] = !status[i] || t0 > err_level || t < err_level;
     }
 
-    e_prop1[0] = sqrt(0.5);
-    e_prop1[1] = sqrt(0.5);
+    e_prop1[0] = std::fabs(0.5);
+    e_prop1[1] = std::sqrt(0.5);
     e_prop1[2] = 0;
 
     e_prop2[0] = 0;
@@ -1702,7 +1702,7 @@ void CV_ComputeEpilinesTest::prepare_to_validation( int /*test_case_idx*/ )
         double t0 = f[0]*p[0] + f[1]*p[1] + f[2]*p[2];
         double t1 = f[3]*p[0] + f[4]*p[1] + f[5]*p[2];
         double t2 = f[6]*p[0] + f[7]*p[1] + f[8]*p[2];
-        double d = sqrt(t0*t0 + t1*t1);
+        double d = std::sqrt(t0*t0 + t1*t1);
         d = d ? 1./d : 1.;
         l[0] = t0*d; l[1] = t1*d; l[2] = t2*d;
     }

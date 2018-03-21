@@ -582,8 +582,8 @@ void CV_CameraCalibrationTest::run( int start_from )
                 imageMeanDx += dx*dx;
                 imageMeanDy += dy*dy;
 
-                dx = fabs(dx);
-                dy = fabs(dy);
+                dx = std::fabs(dx);
+                dy = std::fabs(dy);
 
                 if( dx > maxDx )
                     maxDx = dx;
@@ -946,8 +946,8 @@ void CV_CalibrationMatrixValuesTest::run(int)
         ny = goodAspectRatio;
     }
 
-    goodFovx = (atan2(cx, fx) + atan2(imageSize.width  - cx, fx)) * 180.0 / CV_PI;
-    goodFovy = (atan2(cy, fy) + atan2(imageSize.height - cy, fy)) * 180.0 / CV_PI;
+    goodFovx = (std::atan2(cx, fx) + std::atan2(imageSize.width  - cx, fx)) * 180.0 / CV_PI;
+    goodFovy = (std::atan2(cy, fy) + std::atan2(imageSize.height - cy, fy)) * 180.0 / CV_PI;
 
     goodFocalLength = fx / nx;
 
@@ -955,25 +955,25 @@ void CV_CalibrationMatrixValuesTest::run(int)
     goodPrincipalPoint.y = cy / ny;
 
     // check results
-    if( fabs(fovx - goodFovx) > FLT_EPSILON )
+    if( std::fabs(fovx - goodFovx) > FLT_EPSILON )
     {
         ts->printf( cvtest::TS::LOG, "bad fovx (real=%f, good = %f\n", fovx, goodFovx );
         code = cvtest::TS::FAIL_BAD_ACCURACY;
         goto _exit_;
     }
-    if( fabs(fovy - goodFovy) > FLT_EPSILON )
+    if( std::fabs(fovy - goodFovy) > FLT_EPSILON )
     {
         ts->printf( cvtest::TS::LOG, "bad fovy (real=%f, good = %f\n", fovy, goodFovy );
         code = cvtest::TS::FAIL_BAD_ACCURACY;
         goto _exit_;
     }
-    if( fabs(focalLength - goodFocalLength) > FLT_EPSILON )
+    if( std::fabs(focalLength - goodFocalLength) > FLT_EPSILON )
     {
         ts->printf( cvtest::TS::LOG, "bad focalLength (real=%f, good = %f\n", focalLength, goodFocalLength );
         code = cvtest::TS::FAIL_BAD_ACCURACY;
         goto _exit_;
     }
-    if( fabs(aspectRatio - goodAspectRatio) > FLT_EPSILON )
+    if( std::fabs(aspectRatio - goodAspectRatio) > FLT_EPSILON )
     {
         ts->printf( cvtest::TS::LOG, "bad aspectRatio (real=%f, good = %f\n", aspectRatio, goodAspectRatio );
         code = cvtest::TS::FAIL_BAD_ACCURACY;
@@ -1046,7 +1046,7 @@ void calcdfdx( const vector<vector<Point2f> >& leftF, const vector<vector<Point2
     const int fdim = 2;
     CV_Assert( !leftF.empty() && !rightF.empty() && !leftF[0].empty() && !rightF[0].empty() );
     CV_Assert( leftF[0].size() ==  rightF[0].size() );
-    CV_Assert( fabs(eps) > std::numeric_limits<double>::epsilon() );
+    CV_Assert( std::fabs(eps) > std::numeric_limits<double>::epsilon() );
     int fcount = (int)leftF[0].size(), xdim = (int)leftF.size();
 
     dfdx.create( fcount*fdim, xdim, CV_64FC1 );
@@ -1161,8 +1161,8 @@ void CV_ProjectPointsTest::run(int)
         validImgPoint.y = static_cast<float>((double)cameraMatrix(1,1)*(y*cdist + (double)distCoeffs(0,2)*a3 + distCoeffs(0,3)*a1)
             + (double)cameraMatrix(1,2));
 
-        if( fabs(it->x - validImgPoint.x) > imgPointErr ||
-            fabs(it->y - validImgPoint.y) > imgPointErr )
+        if( std::fabs(it->x - validImgPoint.x) > imgPointErr ||
+            std::fabs(it->y - validImgPoint.y) > imgPointErr )
         {
             ts->printf( cvtest::TS::LOG, "bad image point\n" );
             code = cvtest::TS::FAIL_BAD_ACCURACY;
@@ -1680,8 +1680,8 @@ void CV_StereoCalibrationTest::run( int )
         }
 
         //check that Tx after rectification is equal to distance between cameras
-        double tx = fabs(P2.at<double>(0, 3) / P2.at<double>(0, 0));
-        if (fabs(tx - cvtest::norm(T, NORM_L2)) > 1e-5)
+        double tx = std::fabs(P2.at<double>(0, 3) / P2.at<double>(0, 0));
+        if (std::fabs(tx - cvtest::norm(T, NORM_L2)) > 1e-5)
         {
             ts->set_failed_test_info( cvtest::TS::FAIL_BAD_ACCURACY );
             return;

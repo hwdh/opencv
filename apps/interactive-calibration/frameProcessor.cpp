@@ -226,7 +226,7 @@ bool CalibProcessor::checkLastFrame()
         cv::solvePnP(mCalibData->objectPoints.back(), mCurrentImagePoints, tmpCamMatrix, mCalibData->distCoeffs, r, t);
         RodriguesToEuler(r, angles, CALIB_DEGREES);
 
-        if(fabs(angles.at<double>(0)) > badAngleThresh || fabs(angles.at<double>(1)) > badAngleThresh) {
+        if(std::fabs(angles.at<double>(0)) > badAngleThresh || std::fabs(angles.at<double>(1)) > badAngleThresh) {
             mCalibData->objectPoints.pop_back();
             mCalibData->imagePoints.pop_back();
             isFrameBad = true;
@@ -246,7 +246,7 @@ bool CalibProcessor::checkLastFrame()
         cv::solvePnP(allObjPoints, mCurrentCharucoCorners, tmpCamMatrix, mCalibData->distCoeffs, r, t);
         RodriguesToEuler(r, angles, CALIB_DEGREES);
 
-        if(180.0 - fabs(angles.at<double>(0)) > badAngleThresh || fabs(angles.at<double>(1)) > badAngleThresh) {
+        if(180.0 - std::fabs(angles.at<double>(0)) > badAngleThresh || std::fabs(angles.at<double>(1)) > badAngleThresh) {
             isFrameBad = true;
             mCalibData->allCharucoCorners.pop_back();
             mCalibData->allCharucoIds.pop_back();

@@ -50,6 +50,9 @@
 #endif
 
 #include <cstdio>
+#if defined(__BORLANDC__)
+#include <stdio.h>
+#endif
 
 //! @cond IGNORED
 
