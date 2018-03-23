@@ -110,7 +110,7 @@ public:
 
             for (size_t j = 0; j < _aspectRatios.size(); ++j)
             {
-                if (fabs(aspectRatio - _aspectRatios[j]) < 1e-6)
+                if (std::fabs(aspectRatio - _aspectRatios[j]) < 1e-6)
                 {
                     alreadyExists = true;
                     break;

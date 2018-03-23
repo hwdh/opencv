@@ -813,8 +813,8 @@ public:
         {
             float height = (float)(in.height + 2 * pad.height - kernel.height) / stride.height;
             float width = (float)(in.width + 2 * pad.width - kernel.width) / stride.width;
-            out.height = 1 + (ceilMode ? ceil(height) : floor(height));
-            out.width = 1 + (ceilMode ? ceil(width) : floor(width));
+            out.height = 1 + (ceilMode ? std::ceil(height) : std::floor(height));
+            out.width = 1 + (ceilMode ? std::ceil(width) : std::floor(width));
 
             if (pad.height || pad.width)
             {

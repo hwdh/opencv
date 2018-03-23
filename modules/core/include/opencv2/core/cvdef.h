@@ -367,7 +367,7 @@ Cv64suf;
 
 #ifdef CV_XADD
   // allow to use user-defined macro
-#elif defined __GNUC__ || defined __clang__
+#elif defined __GNUC__ || (defined(__clang__) && !defined(__BORLANDC__))
 #  if defined __clang__ && __clang_major__ >= 3 && !defined __ANDROID__ && !defined __EMSCRIPTEN__ && !defined(__CUDACC__)
 #    ifdef __ATOMIC_ACQ_REL
 #      define CV_XADD(addr, delta) __c11_atomic_fetch_add((_Atomic(int)*)(addr), delta, __ATOMIC_ACQ_REL)
@@ -385,6 +385,9 @@ Cv64suf;
 #elif defined _MSC_VER && !defined RC_INVOKED
 #  include <intrin.h>
 #  define CV_XADD(addr, delta) (int)_InterlockedExchangeAdd((long volatile*)addr, delta)
+#elif defined(__BORLANDC__)
+   CV_INLINE int CV_XADD(int* addr, int delta) { int tmp = *addr; *addr += delta; return tmp; }
+   CV_INLINE unsigned int CV_XADD(unsigned int* addr, int delta) { unsigned int tmp = *addr; *addr += delta; return tmp; }
 #else
    CV_INLINE CV_XADD(int* addr, int delta) { int tmp = *addr; *addr += delta; return tmp; }
 #endif
