@@ -41,7 +41,7 @@
 namespace google {
 namespace protobuf {
 
-#ifdef _MSC_VER
+#if defined(_MSC_VER) || defined(__BORLANDC__)
 enum { IS_COMPILER_MSVC = 1 };
 #ifndef va_copy
 // Define va_copy for MSVC. This is a hack, assuming va_list is simply a

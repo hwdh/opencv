@@ -36,7 +36,7 @@
 #include <ctime>
 #include <ostream>
 #include <string>
-#ifdef _MSC_VER
+#if defined(_MSC_VER) || defined(__BORLANDC__)
 #include <winsock2.h>
 #else
 #include <sys/time.h>

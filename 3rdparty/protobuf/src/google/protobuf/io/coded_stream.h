@@ -113,7 +113,7 @@
 #include <climits>
 #include <string>
 #include <utility>
-#ifdef _MSC_VER
+#if defined(_MSC_VER) || defined(__BORLANDC__)
   // Assuming windows is always little-endian.
   #if !defined(PROTOBUF_DISABLE_LITTLE_ENDIAN_OPT_FOR_TEST)
     #define PROTOBUF_LITTLE_ENDIAN 1

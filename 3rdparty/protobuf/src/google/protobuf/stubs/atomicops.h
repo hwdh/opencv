@@ -173,7 +173,7 @@ Atomic64 Release_Load(volatile const Atomic64* ptr);
 #if defined(THREAD_SANITIZER)
 #include <google/protobuf/stubs/atomicops_internals_tsan.h>
 // MSVC.
-#elif defined(_MSC_VER)
+#elif defined(_MSC_VER) && !defined(__BORLANDC__)
 #if defined(GOOGLE_PROTOBUF_ARCH_IA32) || defined(GOOGLE_PROTOBUF_ARCH_X64) || defined(GOOGLE_PROTOBUF_ARCH_ARM)
 #include <google/protobuf/stubs/atomicops_internals_x86_msvc.h>
 #else
@@ -187,6 +187,9 @@ Atomic64 Release_Load(volatile const Atomic64* ptr);
 // AIX
 #elif defined(GOOGLE_PROTOBUF_OS_AIX)
 #include <google/protobuf/stubs/atomicops_internals_power.h>
+
+#elif defined(__BORLANDC__)
+#include <google/protobuf/stubs/atomicops_internals_generic_c11_atomic.h>
 
 // GCC.
 #elif defined(__GNUC__)
@@ -210,7 +213,7 @@ Atomic64 Release_Load(volatile const Atomic64* ptr);
 // The static_asserts in the C++11 atomics implementation cause it to fail
 // with certain compilers, e.g. nvcc on macOS. Don't use elsewhere unless
 // the TODO in that file is addressed.
-#include <google/protobuf/stubs/atomicops_internals_generic_c11_atomic.h>
+
 #elif defined(GOOGLE_PROTOBUF_ARCH_PPC)
 #include <google/protobuf/stubs/atomicops_internals_ppc_gcc.h>
 #elif (((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7)) || (__GNUC__ > 4))

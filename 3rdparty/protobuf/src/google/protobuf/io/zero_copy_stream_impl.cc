@@ -32,7 +32,7 @@
 //  Based on original Protocol Buffers design by
 //  Sanjay Ghemawat, Jeff Dean, and others.
 
-#ifndef _MSC_VER
+#if !(defined(_MSC_VER) || defined(__BORLANDC__))
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
