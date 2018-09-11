@@ -547,7 +547,11 @@ template <typename ET, typename FT>
 void vlineSet(FT* src, ET* dst, int dst_width)
 {
     for (int i = 0; i < dst_width; i++)
+#if defined(__BORLANDC__)            
+        dst[i] = cv::saturate_cast<ET>(static_cast<double>(src[i]));
+#else    
         dst[i] = src[i];
+#endif
 }
 template <>
 void vlineSet<uint8_t, ufixedpoint16>(ufixedpoint16* src, uint8_t* dst, int dst_width)
@@ -565,7 +569,11 @@ void vlineSet<uint8_t, ufixedpoint16>(ufixedpoint16* src, uint8_t* dst, int dst_
         v_store(dst, v_pack(v_res0, v_res1));
     }
     for (; i < dst_width; i++)
+#if defined(__BORLANDC__)        
+        *(dst++) = cv::saturate_cast<uint8_t>(static_cast<float>(*(src++)));
+#else    
         *(dst++) = *(src++);
+#endif        
 }
 
 template <typename ET, typename FT, int n>
@@ -576,7 +584,11 @@ void vlineResize(FT* src, size_t src_step, FT* m, ET* dst, int dst_width)
         typename FT::WT res = src[i] * m[0];
         for (int k = 1; k < n; k++)
             res = res + src[i + k*src_step] * m[k];
+#if defined(__BORLANDC__)            
+        dst[i] = cv::saturate_cast<ET>(static_cast<double>(res));
+#else                  
         dst[i] = res;
+#endif        
     }
 }
 template <>
@@ -614,7 +626,11 @@ void vlineResize<uint8_t, ufixedpoint16, 2>(ufixedpoint16* src, size_t src_step,
     }
     for (; i < dst_width; i++)
     {
+#if defined(__BORLANDC__)        
+        *(dst++) = cv::saturate_cast<uint8_t>(static_cast<float>((*(src++) * m[0] + *(src1++) * m[1])));
+#else        
         *(dst++) = (uint8_t)(*(src++) * m[0] + *(src1++) * m[1]);
+#endif        
     }
 }
 
