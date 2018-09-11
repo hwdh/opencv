@@ -35,6 +35,10 @@
 #ifndef _WIN32
 #include <stdint.h>
 #endif
+#if defined(__BORLANDC__)
+#include <stdint.h>
+#endif
+
 #include <limits.h>
 
 #ifndef NO_GETENV
