@@ -63,7 +63,7 @@
 # endif
 #endif
 
-#if defined(__OPENCV_BUILD) && defined(__clang__)
+#if defined(__OPENCV_BUILD) && defined(__clang__) && !defined(__BORLANDC__)
 #pragma clang diagnostic ignored "-Winconsistent-missing-override"
 #endif
 #if defined(__OPENCV_BUILD) && defined(__GNUC__) && __GNUC__ >= 5
