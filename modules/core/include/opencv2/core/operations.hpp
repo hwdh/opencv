@@ -51,6 +51,7 @@
 
 #include <cstdio>
 
+
 //! @cond IGNORED
 
 namespace cv
@@ -398,7 +399,7 @@ Ptr<Formatted> format(InputArray mtx, int fmt)
 }
 
 static inline
-int print(Ptr<Formatted> fmtd, FILE* stream = stdout)
+int print(Ptr<Formatted> fmtd, std::FILE* stream = stdout)
 {
     int written = 0;
     fmtd->reset();
@@ -409,31 +410,31 @@ int print(Ptr<Formatted> fmtd, FILE* stream = stdout)
 }
 
 static inline
-int print(const Mat& mtx, FILE* stream = stdout)
+int print(const Mat& mtx, std::FILE* stream = stdout)
 {
     return print(Formatter::get()->format(mtx), stream);
 }
 
 static inline
-int print(const UMat& mtx, FILE* stream = stdout)
+int print(const UMat& mtx, std::FILE* stream = stdout)
 {
     return print(Formatter::get()->format(mtx.getMat(ACCESS_READ)), stream);
 }
 
 template<typename _Tp> static inline
-int print(const std::vector<Point_<_Tp> >& vec, FILE* stream = stdout)
+int print(const std::vector<Point_<_Tp> >& vec, std::FILE* stream = stdout)
 {
     return print(Formatter::get()->format(Mat(vec)), stream);
 }
 
 template<typename _Tp> static inline
-int print(const std::vector<Point3_<_Tp> >& vec, FILE* stream = stdout)
+int print(const std::vector<Point3_<_Tp> >& vec, std::FILE* stream = stdout)
 {
     return print(Formatter::get()->format(Mat(vec)), stream);
 }
 
 template<typename _Tp, int m, int n> static inline
-int print(const Matx<_Tp, m, n>& matx, FILE* stream = stdout)
+int print(const Matx<_Tp, m, n>& matx, std::FILE* stream = stdout)
 {
     return print(Formatter::get()->format(cv::Mat(matx)), stream);
 }
