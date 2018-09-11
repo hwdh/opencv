@@ -48,7 +48,7 @@
 #include <sstream>
 #include <iostream> // std::cerr
 #include <fstream>
-#if !(defined _MSC_VER) || (defined _MSC_VER && _MSC_VER > 1700)
+#if (!(defined _MSC_VER) || (defined _MSC_VER && _MSC_VER > 1700)) && !(defined __BORLANDC__)
 #include <inttypes.h>
 #endif
 
