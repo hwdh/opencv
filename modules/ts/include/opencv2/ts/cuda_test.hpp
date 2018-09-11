@@ -45,6 +45,10 @@
 
 #include "opencv2/ts.hpp"
 
+#if defined __BORLANDC__
+#include <math.h>
+#endif
+
 #include <stdexcept>
 #include "opencv2/core/cuda.hpp"
 
