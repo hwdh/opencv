@@ -6,6 +6,18 @@
 #include "precomp.hpp"
 #include "persistence.hpp"
 
+#if defined(__BORLANDC__)
+size_t strnlen(char * str, size_t maxlen)
+{
+    size_t len = 0;
+    while (len < maxlen && str[len] != '\0')
+    {
+        len++;
+    }
+    return len;
+}
+#endif
+
 char* icv_itoa( int _val, char* buffer, int /*radix*/ )
 {
     const int radix = 10;
