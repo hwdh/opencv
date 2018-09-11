@@ -317,6 +317,15 @@ softdouble cos(const softdouble& a) { return f64_cos(a); }
 | The values to return on conversions to 64-bit integer formats that raise an
 | invalid exception.
 *----------------------------------------------------------------------------*/
+
+#if defined __BORLANDC__
+constexpr uint64_t ui64_fromPosOverflow = UINT64_C( 0xFFFFFFFFFFFFFFFF );
+constexpr uint64_t ui64_fromNegOverflow = 0;
+constexpr uint64_t ui64_fromNaN         = UINT64_C( 0xFFFFFFFFFFFFFFFF );
+constexpr int64_t i64_fromPosOverflow   = UINT64_C( 0x7FFFFFFFFFFFFFFF );
+constexpr int64_t i64_fromNegOverflow   = (~UINT64_C( 0x7FFFFFFFFFFFFFFF ) + 1 - 1);
+constexpr int64_t i64_fromNaN           = UINT64_C( 0x7FFFFFFFFFFFFFFF );
+#else
 #define ui64_fromPosOverflow UINT64_C( 0xFFFFFFFFFFFFFFFF )
 #define ui64_fromNegOverflow 0
 #define ui64_fromNaN         UINT64_C( 0xFFFFFFFFFFFFFFFF )
@@ -325,6 +334,7 @@ softdouble cos(const softdouble& a) { return f64_cos(a); }
 //#define i64_fromNegOverflow (-UINT64_C( 0x7FFFFFFFFFFFFFFF ) - 1)
 #define i64_fromNegOverflow  (~UINT64_C( 0x7FFFFFFFFFFFFFFF ) + 1 - 1)
 #define i64_fromNaN          UINT64_C( 0x7FFFFFFFFFFFFFFF )
+#endif
 
 /*----------------------------------------------------------------------------
 | "Common NaN" structure, used to transfer NaN representations from one format
