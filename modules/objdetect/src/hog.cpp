@@ -46,6 +46,10 @@
 #include "opencl_kernels_objdetect.hpp"
 
 #include <cstdio>
+#if defined __BORLANDC__
+#include <stdio.h>
+#endif
+
 #include <iterator>
 #include <limits>
 
