@@ -47,6 +47,11 @@
 #include "warpers.hpp" // Make your IDE see declarations
 #include <limits>
 
+
+#if defined __BORLANDC__
+using namespace std;
+#endif
+
 //! @cond IGNORED
 
 namespace cv {
