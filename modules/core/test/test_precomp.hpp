@@ -12,8 +12,4 @@
 #include "opencv2/core/private.hpp"
 #include "opencv2/core/hal/hal.hpp"
 
-#if defined(__BORLANDC__)
-#include <math.h>
-#endif
-
 #endif

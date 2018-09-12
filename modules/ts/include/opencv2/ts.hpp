@@ -22,6 +22,9 @@
 #include "cvconfig.h"
 
 #include <cmath>
+#if defined __BORLANDC__
+#include <math.h>
+#endif
 #include <vector>
 #include <list>
 #include <map>
