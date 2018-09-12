@@ -53,6 +53,9 @@
 #include <sstream>
 #include <iostream>
 #include <cmath>
+#if defined __BORLANDC__
+#include <math.h>
+#endif
 #include "opencv2/core.hpp"
 #include "opencv2/core/ocl.hpp"
 #include "opencv2/core/utility.hpp"
