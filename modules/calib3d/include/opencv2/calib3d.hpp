@@ -1914,9 +1914,9 @@ correctly only when there are more than 50% of inliers.
 @sa estimateAffinePartial2D, getAffineTransform
 */
 CV_EXPORTS_W cv::Mat estimateAffine2D(InputArray from, InputArray to, OutputArray inliers = noArray(),
-                                  int method = RANSAC, double ransacReprojThreshold = 3,
-                                  size_t maxIters = 2000, double confidence = 0.99,
-                                  size_t refineIters = 10);
+                                  const int method = RANSAC, const double ransacReprojThreshold = 3,
+                                  const size_t maxIters = 2000, const double confidence = 0.99,
+                                  const size_t refineIters = 10);
 
 /** @brief Computes an optimal limited affine transformation with 4 degrees of freedom between
 two 2D point sets.
@@ -1962,9 +1962,9 @@ correctly only when there are more than 50% of inliers.
 @sa estimateAffine2D, getAffineTransform
 */
 CV_EXPORTS_W cv::Mat estimateAffinePartial2D(InputArray from, InputArray to, OutputArray inliers = noArray(),
-                                  int method = RANSAC, double ransacReprojThreshold = 3,
-                                  size_t maxIters = 2000, double confidence = 0.99,
-                                  size_t refineIters = 10);
+                                  const int method = RANSAC, const double ransacReprojThreshold = 3,
+                                  const size_t maxIters = 2000, const double confidence = 0.99,
+                                  const size_t refineIters = 10);
 
 /** @example samples/cpp/tutorial_code/features2D/Homography/decompose_homography.cpp
 An example program with homography decomposition.
