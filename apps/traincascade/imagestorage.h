@@ -1,6 +1,9 @@
 #ifndef _OPENCV_IMAGESTORAGE_H_
 #define _OPENCV_IMAGESTORAGE_H_
 
+#if defined __BORLANDC__
+#include <stdio.h>
+#endif
 
 class CvCascadeImageReader
 {

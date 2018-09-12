@@ -3,6 +3,9 @@
 // of this distribution and at http://opencv.org/license.html.
 
 #include <iostream>
+#if defined __BORLANDC__
+#include <stdio.h>
+#endif
 
 #include <opencv2/core.hpp>
 #include <opencv2/core/utils/trace.hpp>

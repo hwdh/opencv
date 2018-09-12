@@ -45,6 +45,9 @@
 
 #include <vector>
 #include <ctime>
+#if defined __BORLANDC__
+#include <time.h>
+#endif
 #include "opencv2/core.hpp"
 #include "opencv2/imgproc.hpp"
 #include "opencv2/videostab/global_motion.hpp"

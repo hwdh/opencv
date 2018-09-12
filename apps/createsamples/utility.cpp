@@ -40,7 +40,10 @@
 //M*/
 #include <cstring>
 #include <ctime>
-
+#if defined __BORLANDC__
+#include <stdio.h>
+#include <ctype.h>
+#endif
 #include <sys/stat.h>
 #include <sys/types.h>
 #ifdef _WIN32

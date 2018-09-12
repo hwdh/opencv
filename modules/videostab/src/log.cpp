@@ -42,6 +42,9 @@
 
 #include "precomp.hpp"
 #include <cstdio>
+#if defined __BORLANDC__
+#include <stdio.h>
+#endif
 #include <cstdarg>
 #include "opencv2/videostab/log.hpp"
 
