@@ -57,4 +57,8 @@
 #include "opencv2/features2d/features2d_tegra.hpp"
 #endif
 
+#if defined __BORLANDC__
+#include <math.h>
+#endif
+
 #endif

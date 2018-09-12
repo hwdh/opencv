@@ -59,6 +59,9 @@
 #define GET_OPTIMIZED(func) (func)
 #endif
 
+#if defined __BORLANDC__
+#include <math.h>
+#endif
 
 namespace cv
 {
