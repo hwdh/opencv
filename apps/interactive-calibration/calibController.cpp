@@ -7,6 +7,9 @@
 #include <algorithm>
 #include <cmath>
 #include <ctime>
+#if defined(__BORLANDC__)
+#include <time.h>
+#endif
 
 #include <opencv2/calib3d.hpp>
 #include <opencv2/imgproc.hpp>

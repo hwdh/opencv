@@ -43,10 +43,6 @@
 #ifndef __OPENCV_PRECOMP_H__
 #define __OPENCV_PRECOMP_H__
 
-#if defined(__BORLANDC__)
-#include <math.h>
-#endif
-
 #include "opencv2/video.hpp"
 #include "opencv2/core/utility.hpp"
 #include "opencv2/core/private.hpp"
@@ -55,6 +51,10 @@
 
 #ifdef HAVE_TEGRA_OPTIMIZATION
 #include "opencv2/video/video_tegra.hpp"
+#endif
+
+#if defined(__BORLANDC__)
+#include <math.h>
 #endif
 
 #endif

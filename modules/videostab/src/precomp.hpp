@@ -46,6 +46,9 @@
 #include <stdexcept>
 #include <iostream>
 #include <ctime>
+#if defined(__BORLANDC__)
+#include <time.h>
+#endif
 #include <algorithm>
 #include "opencv2/core.hpp"
 #include "opencv2/imgproc.hpp"

@@ -750,7 +750,7 @@ CvBackgroundData* icvCreateBackgroundData( const char* filename, Size winsize )
             if( !fgets( imgfilename, PATH_MAX - (int)(imgfilename - full) - 1, input ))
                 break;
             len = (int)strlen( imgfilename );
-            for( ; len > 0 && isspace(imgfilename[len-1]); len-- )
+            for( ; len > 0 && std::isspace(imgfilename[len-1]); len-- )
                 imgfilename[len-1] = '\0';
             if( len > 0 )
             {
