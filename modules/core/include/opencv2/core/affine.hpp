@@ -51,6 +51,10 @@
 #include <math.h>
 #endif 
 
+#if defined(__BORLANDC__)
+#include <math.h>
+#endif
+
 namespace cv
 {
 

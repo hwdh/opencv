@@ -12,4 +12,8 @@
 
 #include "opencv2/core/softfloat.hpp"  // softfloat, uint32_t
 
+#if defined(__BORLANDC__)
+#include <math.h>
+#endif
+
 #endif

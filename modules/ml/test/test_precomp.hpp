@@ -5,6 +5,10 @@
 #include "opencv2/ml.hpp"
 #include "opencv2/core/core_c.h"
 
+#if defined(__BORLANDC__)
+#include <math.h>
+#endif
+
 namespace opencv_test {
 using namespace cv::ml;
 

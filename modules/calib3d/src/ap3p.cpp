@@ -1,6 +1,10 @@
 #include "ap3p.h"
 
 #include <cmath>
+#if defined(__BORLANDC__)
+#include <math.h>
+#endif
+
 #include <complex>
 #if defined (_MSC_VER) && (_MSC_VER <= 1700)
 static inline double cbrt(double x) { return (double)cv::cubeRoot((float)x); };

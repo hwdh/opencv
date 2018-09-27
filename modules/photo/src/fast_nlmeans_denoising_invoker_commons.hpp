@@ -45,7 +45,7 @@
 using namespace cv;
 
 // std::isnan is a part of C++11 and it is not supported in MSVS2010/2012
-#if defined _MSC_VER && _MSC_VER < 1800 /* MSVC 2013 */
+#if (defined _MSC_VER && _MSC_VER < 1800) || defined(__BORLANDC__) /* MSVC 2013 */
 #include <float.h>
 namespace std {
 template <typename T> bool isnan(T value) { return _isnan(value) != 0; }

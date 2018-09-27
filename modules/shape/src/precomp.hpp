@@ -59,4 +59,8 @@
 
 #include "opencv2/opencv_modules.hpp"
 
+#if defined(__BORLANDC__)
+#include <math.h>
+#endif
+
 #endif
