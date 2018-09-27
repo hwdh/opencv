@@ -54,4 +54,7 @@
 #include "opencv2/objdetect/objdetect_tegra.hpp"
 #endif
 
+#if defined(__BORLANDC__)
+#include <math.h>
+#endif
 #endif

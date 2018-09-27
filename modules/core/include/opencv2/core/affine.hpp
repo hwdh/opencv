@@ -48,6 +48,10 @@
 
 #include <opencv2/core.hpp>
 
+#if defined(__BORLANDC__)
+#include <math.h>
+#endif
+
 namespace cv
 {
 

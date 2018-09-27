@@ -6,5 +6,8 @@
 
 #include "opencv2/ts.hpp"
 #include "opencv2/video.hpp"
+#if defined(__BORLANDC__)
+#include <math.h>
+#endif
 
 #endif

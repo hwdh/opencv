@@ -47,6 +47,9 @@
 #include "warpers.hpp" // Make your IDE see declarations
 #include <limits>
 
+#if defined(__BORLANDC__)
+#include <math.h>
+#endif
 //! @cond IGNORED
 
 namespace cv {
@@ -248,9 +251,9 @@ void SphericalProjector::mapForward(float x, float y, float &u, float &v)
     float y_ = r_kinv[3] * x + r_kinv[4] * y + r_kinv[5];
     float z_ = r_kinv[6] * x + r_kinv[7] * y + r_kinv[8];
 
-    u = scale * atan2f(x_, z_);
-    float w = y_ / sqrtf(x_ * x_ + y_ * y_ + z_ * z_);
-    v = scale * (static_cast<float>(CV_PI) - acosf(w == w ? w : 0));
+    u = scale * std::atan2f(x_, z_);
+    float w = y_ / std::sqrtf(x_ * x_ + y_ * y_ + z_ * z_);
+    v = scale * (static_cast<float>(CV_PI) - std::acosf(w == w ? w : 0));
 }
 
 
@@ -282,8 +285,8 @@ void CylindricalProjector::mapForward(float x, float y, float &u, float &v)
     float y_ = r_kinv[3] * x + r_kinv[4] * y + r_kinv[5];
     float z_ = r_kinv[6] * x + r_kinv[7] * y + r_kinv[8];
 
-    u = scale * atan2f(x_, z_);
-    v = scale * y_ / sqrtf(x_ * x_ + z_ * z_);
+    u = scale * std::atan2f(x_, z_);
+    v = scale * y_ / std::sqrtf(x_ * x_ + z_ * z_);
 }
 
 
@@ -313,8 +316,8 @@ void FisheyeProjector::mapForward(float x, float y, float &u, float &v)
     float y_ = r_kinv[3] * x + r_kinv[4] * y + r_kinv[5];
     float z_ = r_kinv[6] * x + r_kinv[7] * y + r_kinv[8];
 
-    float u_ = atan2f(x_, z_);
-    float v_ = (float)CV_PI - acosf(y_ / sqrtf(x_ * x_ + y_ * y_ + z_ * z_));
+    float u_ = std::atan2f(x_, z_);
+    float v_ = (float)CV_PI - std::acosf(y_ / std::sqrtf(x_ * x_ + y_ * y_ + z_ * z_));
 
     u = scale * v_ * cosf(u_);
     v = scale * v_ * sinf(u_);
@@ -326,8 +329,8 @@ void FisheyeProjector::mapBackward(float u, float v, float &x, float &y)
     u /= scale;
     v /= scale;
 
-    float u_ = atan2f(v, u);
-    float v_ = sqrtf(u*u + v*v);
+    float u_ = std::atan2f(v, u);
+    float v_ = std::sqrtf(u*u + v*v);
 
     float sinv = sinf((float)CV_PI - v_);
     float x_ = sinv * sinf(u_);
@@ -350,8 +353,8 @@ void StereographicProjector::mapForward(float x, float y, float &u, float &v)
     float y_ = r_kinv[3] * x + r_kinv[4] * y + r_kinv[5];
     float z_ = r_kinv[6] * x + r_kinv[7] * y + r_kinv[8];
 
-    float u_ = atan2f(x_, z_);
-    float v_ = (float)CV_PI - acosf(y_ / sqrtf(x_ * x_ + y_ * y_ + z_ * z_));
+    float u_ = std::atan2f(x_, z_);
+    float v_ = (float)CV_PI - std::acosf(y_ / std::sqrtf(x_ * x_ + y_ * y_ + z_ * z_));
 
     float r = sinf(v_) / (1 - cosf(v_));
 
@@ -365,9 +368,9 @@ void StereographicProjector::mapBackward(float u, float v, float &x, float &y)
     u /= scale;
     v /= scale;
 
-    float u_ = atan2f(v, u);
-    float r = sqrtf(u*u + v*v);
-    float v_ = 2 * atanf(1.f / r);
+    float u_ = std::atan2f(v, u);
+    float r = std::sqrtf(u*u + v*v);
+    float v_ = 2 * std::atanf(1.f / r);
 
     float sinv = sinf((float)CV_PI - v_);
     float x_ = sinv * sinf(u_);
@@ -390,8 +393,8 @@ void CompressedRectilinearProjector::mapForward(float x, float y, float &u, floa
     float y_ = r_kinv[3] * x + r_kinv[4] * y + r_kinv[5];
     float z_ = r_kinv[6] * x + r_kinv[7] * y + r_kinv[8];
 
-    float u_ = atan2f(x_, z_);
-    float v_ = asinf(y_ / sqrtf(x_ * x_ + y_ * y_ + z_ * z_));
+    float u_ = std::atan2f(x_, z_);
+    float v_ = std::asinf(y_ / std::sqrtf(x_ * x_ + y_ * y_ + z_ * z_));
 
     u = scale * a * tanf(u_ / a);
     v = scale * b * tanf(v_) / cosf(u_);
@@ -403,9 +406,9 @@ void CompressedRectilinearProjector::mapBackward(float u, float v, float &x, flo
     u /= scale;
     v /= scale;
 
-    float aatg = a * atanf(u / a);
+    float aatg = a * std::atanf(u / a);
     float u_ = aatg;
-    float v_ = atanf(v * cosf(aatg) / b);
+    float v_ = std::atanf(v * cosf(aatg) / b);
 
     float cosv = cosf(v_);
     float x_ = cosv * sinf(u_);
@@ -428,8 +431,8 @@ void CompressedRectilinearPortraitProjector::mapForward(float x, float y, float 
     float x_ = r_kinv[3] * x + r_kinv[4] * y + r_kinv[5];
     float z_ = r_kinv[6] * x + r_kinv[7] * y + r_kinv[8];
 
-    float u_ = atan2f(x_, z_);
-    float v_ = asinf(y_ / sqrtf(x_ * x_ + y_ * y_ + z_ * z_));
+    float u_ = std::atan2f(x_, z_);
+    float v_ = std::asinf(y_ / std::sqrtf(x_ * x_ + y_ * y_ + z_ * z_));
 
     u = - scale * a * tanf(u_ / a);
     v = scale * b * tanf(v_) / cosf(u_);
@@ -441,9 +444,9 @@ void CompressedRectilinearPortraitProjector::mapBackward(float u, float v, float
     u /= - scale;
     v /= scale;
 
-    float aatg = a * atanf(u / a);
+    float aatg = a * std::atanf(u / a);
     float u_ = aatg;
-    float v_ = atanf(v * cosf( aatg ) / b);
+    float v_ = std::atanf(v * cosf( aatg ) / b);
 
     float cosv = cosf(v_);
     float y_ = cosv * sinf(u_);
@@ -466,8 +469,8 @@ void PaniniProjector::mapForward(float x, float y, float &u, float &v)
     float y_ = r_kinv[3] * x + r_kinv[4] * y + r_kinv[5];
     float z_ = r_kinv[6] * x + r_kinv[7] * y + r_kinv[8];
 
-    float u_ = atan2f(x_, z_);
-    float v_ = asinf(y_ / sqrtf(x_ * x_ + y_ * y_ + z_ * z_));
+    float u_ = std::atan2f(x_, z_);
+    float v_ = std::asinf(y_ / std::sqrtf(x_ * x_ + y_ * y_ + z_ * z_));
 
     float tg = a * tanf(u_ / a);
     u = scale * tg;
@@ -485,14 +488,14 @@ void PaniniProjector::mapBackward(float u, float v, float &x, float &y)
     u /= scale;
     v /= scale;
 
-    float lamda = a * atanf(u / a);
+    float lamda = a * std::atanf(u / a);
     float u_ = lamda;
 
     float v_;
     if ( fabs(lamda) > 1E-7)
-        v_ = atanf(v * sinf(lamda) / (b * a * tanf(lamda / a)));
+        v_ = std::atanf(v * sinf(lamda) / (b * a * tanf(lamda / a)));
     else
-        v_ = atanf(v / b);
+        v_ = std::atanf(v / b);
 
     float cosv = cosf(v_);
     float x_ = cosv * sinf(u_);
@@ -515,8 +518,8 @@ void PaniniPortraitProjector::mapForward(float x, float y, float &u, float &v)
     float x_ = r_kinv[3] * x + r_kinv[4] * y + r_kinv[5];
     float z_ = r_kinv[6] * x + r_kinv[7] * y + r_kinv[8];
 
-    float u_ = atan2f(x_, z_);
-    float v_ = asinf(y_ / sqrtf(x_ * x_ + y_ * y_ + z_ * z_));
+    float u_ = std::atan2f(x_, z_);
+    float v_ = std::asinf(y_ / std::sqrtf(x_ * x_ + y_ * y_ + z_ * z_));
 
     float tg = a * tanf(u_ / a);
     u = - scale * tg;
@@ -534,14 +537,14 @@ void PaniniPortraitProjector::mapBackward(float u, float v, float &x, float &y)
     u /= - scale;
     v /= scale;
 
-    float lamda = a * atanf(u / a);
+    float lamda = a * std::atanf(u / a);
     float u_ = lamda;
 
     float v_;
     if ( fabs(lamda) > 1E-7)
-        v_ = atanf(v * sinf(lamda) / (b * a * tanf(lamda/a)));
+        v_ = std::atanf(v * sinf(lamda) / (b * a * tanf(lamda/a)));
     else
-        v_ = atanf(v / b);
+        v_ = std::atanf(v / b);
 
     float cosv = cosf(v_);
     float y_ = cosv * sinf(u_);
@@ -564,8 +567,8 @@ void MercatorProjector::mapForward(float x, float y, float &u, float &v)
     float y_ = r_kinv[3] * x + r_kinv[4] * y + r_kinv[5];
     float z_ = r_kinv[6] * x + r_kinv[7] * y + r_kinv[8];
 
-    float u_ = atan2f(x_, z_);
-    float v_ = asinf(y_ / sqrtf(x_ * x_ + y_ * y_ + z_ * z_));
+    float u_ = std::atan2f(x_, z_);
+    float v_ = std::asinf(y_ / std::sqrtf(x_ * x_ + y_ * y_ + z_ * z_));
 
     u = scale * u_;
     v = scale * logf( tanf( (float)(CV_PI/4) + v_/2 ) );
@@ -577,7 +580,7 @@ void MercatorProjector::mapBackward(float u, float v, float &x, float &y)
     u /= scale;
     v /= scale;
 
-    float v_ = atanf( sinhf(v) );
+    float v_ = std::atanf( std::sinhf(v) );
     float u_ = u;
 
     float cosv = cosf(v_);
@@ -601,13 +604,13 @@ void TransverseMercatorProjector::mapForward(float x, float y, float &u, float &
     float y_ = r_kinv[3] * x + r_kinv[4] * y + r_kinv[5];
     float z_ = r_kinv[6] * x + r_kinv[7] * y + r_kinv[8];
 
-    float u_ = atan2f(x_, z_);
-    float v_ = asinf(y_ / sqrtf(x_ * x_ + y_ * y_ + z_ * z_));
+    float u_ = std::atan2f(x_, z_);
+    float v_ = std::asinf(y_ / std::sqrtf(x_ * x_ + y_ * y_ + z_ * z_));
 
     float B = cosf(v_) * sinf(u_);
 
     u = scale / 2 * logf( (1+B) / (1-B) );
-    v = scale * atan2f(tanf(v_), cosf(u_));
+    v = scale * std::atan2f(tanf(v_), cosf(u_));
 }
 
 inline
@@ -616,8 +619,8 @@ void TransverseMercatorProjector::mapBackward(float u, float v, float &x, float 
     u /= scale;
     v /= scale;
 
-    float v_ = asinf( sinf(v) / coshf(u) );
-    float u_ = atan2f( sinhf(u), cos(v) );
+    float v_ = std::asinf( sinf(v) / std::coshf(u) );
+    float u_ = std::atan2f( std::sinhf(u), cos(v) );
 
     float cosv = cosf(v_);
     float x_ = cosv * sinf(u_);
@@ -644,8 +647,8 @@ void SphericalPortraitProjector::mapForward(float x, float y, float &u0, float &
     float y_ = x0_;
     float u, v;
 
-    u = scale * atan2f(x_, z_);
-    v = scale * (static_cast<float>(CV_PI) - acosf(y_ / sqrtf(x_ * x_ + y_ * y_ + z_ * z_)));
+    u = scale * std::atan2f(x_, z_);
+    v = scale * (static_cast<float>(CV_PI) - std::acosf(y_ / std::sqrtf(x_ * x_ + y_ * y_ + z_ * z_)));
 
     u0 = -u;//v;
     v0 = v;//u;
@@ -690,8 +693,8 @@ void CylindricalPortraitProjector::mapForward(float x, float y, float &u0, float
     float y_ = x0_;
     float u, v;
 
-    u = scale * atan2f(x_, z_);
-    v = scale * y_ / sqrtf(x_ * x_ + z_ * z_);
+    u = scale * std::atan2f(x_, z_);
+    v = scale * y_ / std::sqrtf(x_ * x_ + z_ * z_);
 
     u0 = -u;//v;
     v0 = v;//u;

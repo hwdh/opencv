@@ -1,6 +1,10 @@
 #include "ap3p.h"
 
 #include <cmath>
+#if defined(__BORLANDC__)
+#include <math.h>
+#endif
+
 #include <complex>
 #if defined (_MSC_VER) && (_MSC_VER <= 1700)
 static inline double cbrt(double x) { return (double)cv::cubeRoot((float)x); };
@@ -35,7 +39,11 @@ void solveQuartic(const double *factors, double *realRoots) {
     else
         w = sqrt(static_cast<complex<double> >(q3 * q3 - p3 * p3 * p3)) - q3;
     if (w.imag() == 0.0) {
+#if defined(__BORLANDC__)
+        w.real((double)cv::cubeRoot((float)w.real()));
+#else        
         w.real(cbrt(w.real()));
+#endif
         t = 2.0 * (w.real() + p3 / w.real());
     } else {
         w = pow(w, 1.0 / 3);

@@ -53,4 +53,8 @@
 #include "opencv2/photo/photo_tegra.hpp"
 #endif
 
+#if defined(__BORLANDC__)
+#include <math.h>
+#endif
+
 #endif

@@ -48,6 +48,9 @@
 #include "opencv2/imgproc.hpp"
 #include "opencv2/opencv_modules.hpp"
 
+#if defined(__BORLANDC__)
+#include <math.h>
+#endif
 namespace cv {
 namespace detail {
 
